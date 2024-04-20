@@ -1,3 +1,7 @@
+# Result
+![IMG_1111](https://github.com/rizkidarmawan21/react-native-learn-basic/assets/80609220/3303f9df-8935-4634-b3dc-447a006e3fcf)
+
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
