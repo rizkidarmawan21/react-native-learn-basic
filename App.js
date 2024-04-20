@@ -6,16 +6,20 @@ const App = () => {
     <View style={styles.container}>
       {/* Inline Styles */}
       <View style={{ backgroundColor: 'red', padding: 10 }}>
-        <Text style={{ color: 'yellow' }}>Hello World</Text>
+        <Text style={{ color: 'yellow' }}>Hallo Joni</Text>
       </View>
 
       {/* Using StyleSheet */}
       <View style={styles.latarbelakang}>
-        <Text style={styles.judulLatarBelakang}>Hello Karimun Jawa</Text>
+        <Text style={styles.judulLatarBelakang}>
+          Selamat Datang di Joshop
+        </Text>
       </View>
 
       <View style={styles.latarbelakang}>
-        <Text>Hello Bali</Text>
+        <Text>
+          Ingin beli apa hari ini?
+        </Text>
       </View>
 
       {/* ScrollView */}
