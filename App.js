@@ -1,64 +1,54 @@
-import { View, Text, SafeAreaView, StyleSheet, Image, ScrollView } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { View, Text, SafeAreaView, StyleSheet, Image, ScrollView } from 'react-native';
 
 const App = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {/* Inline Styles */}
-      <View style={{ backgroundColor: 'red' }}>
-        <Text style={{ color: 'yellow' }}>
-          Hello World
-        </Text>
+      <View style={{ backgroundColor: 'red', padding: 10 }}>
+        <Text style={{ color: 'yellow' }}>Hello World</Text>
       </View>
 
       {/* Using StyleSheet */}
       <View style={styles.latarbelakang}>
-        <Text style={styles.judulLatarBelakang}>
-          Hello Karimun Jawa
-        </Text>
+        <Text style={styles.judulLatarBelakang}>Hello Karimun Jawa</Text>
       </View>
 
-      <View style={gaya.latarbelakang}>
-        <Text>
-          Hello Bali
-        </Text>
+      <View style={styles.latarbelakang}>
+        <Text>Hello Bali</Text>
       </View>
 
-
-
-      {/* ================= */}
-      <ScrollView contentContainerStyle={stylesProduk.row}>
-        {[...Array(10)].map((_, i) => (
-          <View key={i} style={stylesProduk.card}>
-            <Image source={{ uri: 'https://img.ws.mms.shopee.co.id/sg-11134201-23020-8hnqqeirj0mv73' }} style={stylesProduk.gambarProduk} />
-            <Text style={stylesProduk.namaProduk}>
-              Kaos Hitam Kurir Shopee
-            </Text>
-          </View>
-        ))}
-      </ScrollView>
-
-    </SafeAreaView>
-  )
-}
+      {/* ScrollView */}
+      <View style={{ flex:1 }}>
+        <ScrollView contentContainerStyle={stylesProduk.row}>
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(item => (
+            <View key={item} style={stylesProduk.card}>
+              <Image source={{ uri: 'https://img.ws.mms.shopee.co.id/sg-11134201-23020-8hnqqeirj0mv73' }} style={stylesProduk.gambarProduk} />
+              <Text style={stylesProduk.namaProduk}>Kaos Hitam Kurir Shopee</Text>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+    </View>
+  );
+};
 
 const stylesProduk = StyleSheet.create({
   row: {
-    flexDirection: 'row', // change this to column
+    flexDirection: 'row',
     flexWrap: 'wrap',
     backgroundColor: 'yellow',
+    paddingVertical: 10,
   },
   card: {
     borderWidth: 2,
     borderColor: 'skyblue',
     borderRadius: 10,
-    // borderTopRightRadius: 100,
-    // borderBottomLeftRadius: 100,
     width: 140,
     height: 200,
     backgroundColor: 'white',
     padding: 10,
-    margin: 10
+    margin: 10,
   },
   gambarProduk: {
     width: '100%',
@@ -71,38 +61,28 @@ const stylesProduk = StyleSheet.create({
     textAlign: 'center',
     fontSize: 14,
     fontWeight: 'bold',
-    textDecorationLine: 'underline'
-  }
-
-})
+    textDecorationLine: 'underline',
+  },
+});
 
 const styles = StyleSheet.create({
   container: {
-    // margin: 20,
-    // marginHorizontal: 20,
-    // marginVertical: 20,
-    // marginTop: 20,
+    flex: 1,
     marginLeft: 20,
     marginRight: 20,
-    flex: 1,
     backgroundColor: 'red',
   },
   latarbelakang: {
     backgroundColor: 'pink',
-
+    padding: 10,
+    marginTop: 10,
   },
   judulLatarBelakang: {
     color: 'blue',
     fontSize: 30,
     fontWeight: '900',
-    fontFamily: 'Arial'
-  }
-})
+    fontFamily: 'Arial',
+  },
+});
 
-const gaya = StyleSheet.create({
-  latarbelakang: {
-    backgroundColor: 'green'
-  }
-})
-
-export default App
+export default App;
