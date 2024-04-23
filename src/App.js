@@ -1,15 +1,23 @@
 import { View } from 'react-native'
-import React from 'react'
-import Home from './pages/Home'
-import Login from './pages/Login'
+import React, { useState } from 'react'
+import Transaction from './pages/Transaction'
+import TabBar from './components/molecules/TabBar'
+import Products from './pages/Products'
 
 const App = () => {
-  return (
-    <>
-      {/* <Home /> */}
+  const [activeTab, setActiveTab] = useState('Transaction')
 
-      <Login />
-    </>
+  const handleTabBar = (tab) => {
+    setActiveTab(tab)
+  }
+  return (
+    <View style={{ flex: 1, justifyContent: 'space-between' }}>
+      <>
+        {activeTab === 'Transaction' && <Transaction />}
+        {activeTab === 'Products' && <Products />}
+      </>
+      <TabBar handleTab={handleTabBar} activeTab={activeTab} />
+    </View>
   )
 }
 
