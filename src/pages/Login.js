@@ -1,89 +1,136 @@
-import { Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { Alert, Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Input from '../components/atoms/Input'
 
 const Login = () => {
+    // const [username, setUsername] = useState('')
+    // const [email, setEmail] = useState('')
+    // const [phoneNumber, setPhoneNumber] = useState('')
+    // const [password, setPassword] = useState('')
+
+
+    // Jika menggunakan object akan lebih rapih
+    const [loginForm, setLoginForm] = useState({
+        username: '',
+        email: '',
+        phoneNumber: '',
+        password: ''
+    })
+
+
+    useEffect(() => {
+        Alert.alert('Selamat Datang', 'Selamat datang di aplikasi kami')
+    }, []);
+
+    function submitLogin() {
+        // const username = 'admin'
+
+        // if (loginForm.username != username) {
+        //     Alert.alert('Username Salah', 'Username yang anda masukkan salah')
+        //     return
+        // }
+
+        // Alert.alert('Login Berhasil', 'Selamat datang di aplikasi kami')
+
+
+        // Validasi Semua Harus Diisi
+
+        if (loginForm.username == '') {
+            Alert.alert('Username Kosong', 'Username harus diisi')
+            return
+        }
+
+        if (loginForm.email == '') {
+            Alert.alert('Email Kosong', 'Email harus diisi')
+            return
+        }
+
+        if (loginForm.phoneNumber == '') {
+            Alert.alert('Phone Number Kosong', 'Phone Number harus diisi')
+            return
+        }
+
+        if (loginForm.password == '') {
+            Alert.alert('Password Kosong', 'Password harus diisi')
+            return
+        }
+
+        // Jika validasi diatas sudah benar, maka akan muncul alert login berhasil
+        Alert.alert('Login Berhasil', 'Selamat datang di aplikasi kami')
+
+        // Jika sudah berhasil login, maka form login akan direset menjadi kosong
+        setLoginForm({
+            username: '',
+            email: '',
+            phoneNumber: '',
+            password: ''
+        })
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.titlePage}>
                 Halaman Login
             </Text>
             <View style={styles.loginForm}>
-                <Input 
+                <Input
                     label="Username"
                     placeholder="Insert Username"
                     required
+                    value={loginForm.username}
+                    onChange={(isiText) => {
+                        setLoginForm({
+                            ...loginForm,
+                            username: isiText
+                        })
+                    }}
                 />
 
-                <Input 
+                <Input
                     label="Email"
                     placeholder="Insert Email"
-                    required  
+                    required
                     keyboardType="email-address"
+                    value={loginForm.email}
+                    onChange={(isiText) => {
+                        setLoginForm({
+                            ...loginForm,
+                            email: isiText
+                        })
+                    }}
                 />
 
-                <Input 
+                <Input
                     label="Phone Number"
                     placeholder="Insert Phone Number"
-                    required  
+                    required
                     keyboardType="numeric"
+                    value={loginForm.phoneNumber}
+                    onChange={(isiText) => {
+                        setLoginForm({
+                            ...loginForm,
+                            phoneNumber: isiText
+                        })
+                    }}
                 />
 
-                <Input 
+                <Input
                     label="Password"
                     placeholder="Insert Password"
                     required
                     secure
-                />
-
-                {/* <Text style={styles.labelLoginInput}>
-                    Email
-                </Text>
-                <TextInput
-                    style={styles.loginInput}
-                    placeholder='Masukkan email'
-                    placeholderTextColor='black'
-                    keyboardType="email-address"
-                />
-
-                <Text style={styles.labelLoginInput}>
-                    Nomor Telepon
-                </Text>
-                <TextInput
-                    style={styles.loginInput}
-                    placeholder='Masukkan nomor telepon'
-                    placeholderTextColor='black'
-                    keyboardType="numeric"
-                />
-
-                <Text style={styles.labelLoginInput}>
-                    Password
-                </Text>
-                <TextInput
-                    style={styles.loginInput}
-                    placeholder='Masukkan password'
-                    placeholderTextColor='black'
-                    secureTextEntry={true}
-                /> */}
-
-                {/* ===== TOMBOL ==== */}
-
-                {/* PRESSABLE */}
-                {/* <Pressable 
-                    onPress={() => {
-                        console.log('asasas')
+                    value={loginForm.password}
+                    onChange={(isiText) => {
+                        setLoginForm({
+                            ...loginForm,
+                            password: isiText
+                        })
                     }}
-                style={styles.btnLogin}>
-                    <Text style={styles.btnLoginText}>
-                        Let's Login
-                    </Text>
-                </Pressable> */}
+                />
 
                 {/* TOUCHABEL OPACITY */}
                 <TouchableOpacity
-                    onPress={() => {
-                        console.log('toucbleee')
-                    }}
+                    onPress={() => submitLogin()}
                     style={styles.btnLogin}>
                     <Text style={styles.btnLoginText}>
                         Let's Login
@@ -102,24 +149,15 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         padding: 20
     },
-    titlePage:{
+    titlePage: {
         fontSize: 25,
         fontWeight: 'bold',
         marginBottom: 20,
         color: 'black',
-    },  
+    },
     loginForm: {
         flex: 1,
         justifyContent: 'center',
-    },
-    loginInput: {
-        color: 'black',
-        borderWidth: 1,
-        paddingHorizontal: 20,
-        fontSize: 16,
-        backgroundColor: '#f2f2f2',
-        borderRadius: 10,
-        marginBottom: 10,
     },
     btnLogin: {
         backgroundColor: '#3d67e3',
