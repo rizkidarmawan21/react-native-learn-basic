@@ -18,10 +18,6 @@ const Login = () => {
     })
 
 
-    useEffect(() => {
-        Alert.alert('Selamat Datang', 'Selamat datang di aplikasi kami')
-    }, []);
-
     function submitLogin() {
         // const username = 'admin'
 
