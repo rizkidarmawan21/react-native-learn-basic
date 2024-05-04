@@ -1,12 +1,34 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { getData, removeData } from '../storages/localStorage';
 
-const Home = () => {
+const Home = ({ navigation }) => {
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        getData('auth').then(async res => {
+            if (!res) {
+                navigation.replace('Login');
+            } else {
+                setUser(res);
+            }
+
+            
+        });
+    })
+
+    function logout() {
+        removeData('auth');
+
+        // Redirect ke halaman login
+        navigation.replace('Login');
+    }
+
     return (
         <View style={styles.container}>
             {/* Inline Styles */}
             <View style={{ backgroundColor: 'red', padding: 10 }}>
-                <Text style={{ color: 'yellow' }}>Hallo Joni</Text>
+                <Text style={{ color: 'yellow' }}>Hallo {user?.username}</Text>
             </View>
 
             {/* Using StyleSheet */}
@@ -20,6 +42,12 @@ const Home = () => {
                 <Text>
                     Ingin beli apa hari ini?
                 </Text>
+
+                <TouchableOpacity onPress={logout}>
+                    <Text>
+                        Logout
+                    </Text>
+                </TouchableOpacity>
             </View>
 
             {/* ScrollView */}

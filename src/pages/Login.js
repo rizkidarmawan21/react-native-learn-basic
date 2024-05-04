@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Input from '../components/atoms/Input'
 import { getData, storeData } from '../storages/localStorage'
 
-const Login = () => {
+const Login = ({ navigation }) => {
     // const [username, setUsername] = useState('')
     // const [email, setEmail] = useState('')
     // const [phoneNumber, setPhoneNumber] = useState('')
@@ -58,11 +58,6 @@ const Login = () => {
         // Untuk menyimpan data login ke local storage
         storeData('auth', loginForm)
 
-        // Untuk melihat data yang sudah disimpan di local storage
-        getData('auth').then(async res => {
-            console.log('Data dari local storage', res)
-        });
-
         // Jika sudah berhasil login, maka form login akan direset menjadi kosong
         setLoginForm({
             username: '',
@@ -70,6 +65,9 @@ const Login = () => {
             phoneNumber: '',
             password: ''
         })
+
+        // Redirect ke halaman home
+        navigation.replace('Home')
     }
 
     return (
