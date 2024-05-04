@@ -1,6 +1,7 @@
 import { Alert, Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Input from '../components/atoms/Input'
+import { getData, storeData } from '../storages/localStorage'
 
 const Login = () => {
     // const [username, setUsername] = useState('')
@@ -53,6 +54,14 @@ const Login = () => {
 
         // Jika validasi diatas sudah benar, maka akan muncul alert login berhasil
         Alert.alert('Login Berhasil', 'Selamat datang di aplikasi kami')
+
+        // Untuk menyimpan data login ke local storage
+        storeData('auth', loginForm)
+
+        // Untuk melihat data yang sudah disimpan di local storage
+        getData('auth').then(async res => {
+            console.log('Data dari local storage', res)
+        });
 
         // Jika sudah berhasil login, maka form login akan direset menjadi kosong
         setLoginForm({
