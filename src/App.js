@@ -22,22 +22,6 @@ function MyTabs() {
 }
 
 const App = () => {
-
-  // const [isSplash, setIsSplash] = useState(true)
-  // const [isLogin, setIsLogin] = useState(false)
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setIsSplash(false)
-  //   }, 3000)
-
-  //   getData('auth').then(async res => {
-  //     if (res) {
-  //       setIsLogin(true)
-  //     }
-  //   });
-  // })
-
   return (
     <NavigationContainer initialRouteName="SplashScreen">
       <Stack.Navigator>
