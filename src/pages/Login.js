@@ -67,7 +67,7 @@ const Login = ({ navigation }) => {
         })
 
         // Redirect ke halaman home
-        navigation.replace('Home')
+        navigation.replace('Main')
     }
 
     return (

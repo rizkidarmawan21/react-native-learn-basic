@@ -8,7 +8,7 @@ const SplashScreen = ({ navigation }) => {
         setTimeout(() => {
             getData('auth').then(async res => {
                 if (res) {
-                    navigation.replace('Home')
+                    navigation.replace('Main')
                 } else {
                     navigation.replace('Login')
                 }
