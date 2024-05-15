@@ -1,15 +1,11 @@
-import { View } from 'react-native'
+import { Text, View } from 'react-native'
 import React from 'react'
-import Home from './pages/Home'
-import Login from './pages/Login'
 
 const App = () => {
   return (
-    <>
-      {/* <Home /> */}
-
-      <Login />
-    </>
+    <View>
+      <Text>App</Text>
+    </View>
   )
 }
 
