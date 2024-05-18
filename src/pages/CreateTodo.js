@@ -1,22 +1,47 @@
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Input from '../components/atoms/Input'
 import axios from 'axios'
+import { getData } from '../storages/localStorage'
 
 const CreateTodo = ({ navigation }) => {
     const [todo, setTodo] = useState()
+    const [token, setToken] = useState()
+    const [loading, setLoading] = useState(false)
 
+    useEffect(() => {
+        getData('token').then(async res => {
+            if (!res) {
+                navigation.replace('Login');
+            } else {
+                setToken(res)
+            }
+        });
+    })
 
     const saveTodo = () => {
-        axios.post('http://localhost:3000/todo', {
-            title: todo,
-            completed: false,
+        setLoading(true)
+
+        axios.post('https://example-api.darms.my.id/api/todos', {
+            task_name: todo,
+            is_completed: false
+        }, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
         })
             .then((response) => {
                 Alert.alert('Success', 'Todo has been saved')
                 navigation.navigate('Todolist')
+
+                // setLoading(false)
             }).catch((error) => {
-                console.log(error)
+                const err = error.response.data
+                Alert.alert('Error', err.message)
+
+                // setLoading(false)
+            }).finally(() => {
+                setLoading(false)
             })
     }
 
@@ -33,13 +58,37 @@ const CreateTodo = ({ navigation }) => {
                     }}
                 />
 
-                <TouchableOpacity
-                    onPress={() => saveTodo()}
+                {/* <TouchableOpacity
+                    onPress={() => loading ? null : saveTodo()}
                     style={styles.btnLogin}>
                     <Text style={styles.btnLoginText}>
-                        Save
+                        {loading ? 'Loading...' : 'Save'}
                     </Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
+
+
+                {
+                    loading ? (
+                        <View
+                            style={styles.btnLogin}>
+                            <Text style={styles.btnLoginText}>
+                                Loading...
+                            </Text>
+                        </View>
+                    ) : (
+                        <TouchableOpacity
+                            onPress={() => saveTodo()}
+                            style={styles.btnLogin}>
+                            <Text style={styles.btnLoginText}>
+                                Save
+                            </Text>
+                        </TouchableOpacity>
+                    )
+                }
+
+
+
+
             </View>
         </View>
     )

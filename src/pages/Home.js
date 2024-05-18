@@ -7,18 +7,21 @@ const Home = ({ navigation }) => {
 
     useEffect(() => {
         getData('auth').then(async res => {
-            if (!res) {
-                navigation.replace('Login');
-            } else {
+            if (res) {
                 setUser(res);
             }
+        });
 
-            
+        getData('token').then(async res => {
+            if (!res) {
+                navigation.replace('Login');
+            }
         });
     })
 
     function logout() {
         removeData('auth');
+        removeData('token');
 
         // Redirect ke halaman login
         navigation.replace('Login');
@@ -28,7 +31,7 @@ const Home = ({ navigation }) => {
         <View style={styles.container}>
             {/* Inline Styles */}
             <View style={{ backgroundColor: 'red', padding: 10 }}>
-                <Text style={{ color: 'yellow' }}>Hallo {user?.username}</Text>
+                <Text style={{ color: 'yellow' }}>Hallo {user?.name}</Text>
             </View>
 
             {/* Using StyleSheet */}

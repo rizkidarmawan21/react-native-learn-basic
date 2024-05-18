@@ -1,20 +1,33 @@
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { title } from 'process';
+import { getData } from '../storages/localStorage';
 
 export default function Todo({ navigation }) {
     const [todo, setTodo] = useState([])
+    const [token, setToken] = useState('')
 
     useEffect(() => {
         getTodo()
+
+        getData('token').then(async res => {
+            if (!res) {
+                navigation.replace('Login');
+            } else {
+                setToken(res)
+            }
+        });
     })
 
     const getTodo = () => {
-        axios.get('http://localhost:3000/todo')
+        axios.get('https://example-api.darms.my.id/api/todos', {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        })
             .then((response) => {
                 // parsing
-                const data = response.data
+                const data = response.data.data
                 setTodo(data)
             }).catch((error) => {
                 console.log(error)
@@ -22,16 +35,19 @@ export default function Todo({ navigation }) {
     }
 
     const updateTodo = (id) => {
-        axios.put(`http://localhost:3000/todos/${id}`, {
-            id: id,
-            title: 'sd',
-            completed: true
+        axios.put(`https://example-api.darms.my.id/api/todos/${id}/complete`, {
+            is_completed: true
+        },{
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
         })
             .then((response) => {
                 Alert.alert('Success', 'Todo has been updated')
                 getTodo()
             }).catch((error) => {
-                console.log(error)
+                const err = error.response.data
+                Alert.alert('Error', err.message)
             })
     }
 
@@ -64,13 +80,13 @@ export default function Todo({ navigation }) {
                             <View style={styles.itemTodo} key={index}>
                                 <View>
                                     <Text style={styles.title}>
-                                        {index + 1}. {item.title}
+                                        {index + 1}. {item.task_name}
                                     </Text>
                                     <Text style={styles.status}>
-                                        {item.completed ? 'Completed' : 'Not Completed'}
+                                        {item.is_completed ? 'Completed' : 'Not Completed'}
                                     </Text>
                                 </View>
-                                {item.completed === false && (
+                                {item.is_completed === false && (
                                     <TouchableOpacity
                                         onPress={() => updateTodo(item.id)}
                                         style={styles.checklist}>
@@ -133,6 +149,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 16,
         fontWeight: 'bold',
+        color: 'black',
     },
     status: {
         color: 'grey',

@@ -2,6 +2,7 @@ import { Alert, Pressable, SafeAreaView, StyleSheet, Text, TextInput, TouchableO
 import React, { useEffect, useState } from 'react'
 import Input from '../components/atoms/Input'
 import { getData, storeData } from '../storages/localStorage'
+import axios from 'axios'
 
 const Login = ({ navigation }) => {
     // const [username, setUsername] = useState('')
@@ -12,9 +13,7 @@ const Login = ({ navigation }) => {
 
     // Jika menggunakan object akan lebih rapih
     const [loginForm, setLoginForm] = useState({
-        username: '',
         email: '',
-        phoneNumber: '',
         password: ''
     })
 
@@ -32,18 +31,8 @@ const Login = ({ navigation }) => {
 
         // Validasi Semua Harus Diisi
 
-        if (loginForm.username == '') {
-            Alert.alert('Username Kosong', 'Username harus diisi')
-            return
-        }
-
         if (loginForm.email == '') {
             Alert.alert('Email Kosong', 'Email harus diisi')
-            return
-        }
-
-        if (loginForm.phoneNumber == '') {
-            Alert.alert('Phone Number Kosong', 'Phone Number harus diisi')
             return
         }
 
@@ -53,21 +42,38 @@ const Login = ({ navigation }) => {
         }
 
         // Jika validasi diatas sudah benar, maka akan muncul alert login berhasil
-        Alert.alert('Login Berhasil', 'Selamat datang di aplikasi kami')
+        // Alert.alert('Login Berhasil', 'Selamat datang di aplikasi kami')
 
         // Untuk menyimpan data login ke local storage
-        storeData('auth', loginForm)
+        // storeData('auth', loginForm)
 
         // Jika sudah berhasil login, maka form login akan direset menjadi kosong
-        setLoginForm({
-            username: '',
-            email: '',
-            phoneNumber: '',
-            password: ''
-        })
+        // setLoginForm({
+        //     email: '',
+        //     password: ''
+        // })
 
         // Redirect ke halaman home
-        navigation.replace('Main')
+        // navigation.replace('Main')
+
+        // axios.post('https://example-api.darms.my.id/api/login', {
+        //     email: loginForm.email,
+        //     password: loginForm.password
+        // })
+
+        axios.post('https://example-api.darms.my.id/api/login', loginForm )
+        .then((response) => {
+            Alert.alert('Login Berhasil', 'Selamat datang di aplikasi kami')
+            
+            const res = response.data
+            storeData('auth', res.user)
+            storeData('token', res.token)
+
+            navigation.replace('Main')
+        }).catch((error) => {
+            const err = error.response.data
+            Alert.alert('Login Gagal', err.message)
+        })
     }
 
     return (
@@ -76,18 +82,6 @@ const Login = ({ navigation }) => {
                 Halaman Login
             </Text>
             <View style={styles.loginForm}>
-                <Input
-                    label="Username"
-                    placeholder="Insert Username"
-                    required
-                    value={loginForm.username}
-                    onChange={(isiText) => {
-                        setLoginForm({
-                            ...loginForm,
-                            username: isiText
-                        })
-                    }}
-                />
 
                 <Input
                     label="Email"
@@ -99,20 +93,6 @@ const Login = ({ navigation }) => {
                         setLoginForm({
                             ...loginForm,
                             email: isiText
-                        })
-                    }}
-                />
-
-                <Input
-                    label="Phone Number"
-                    placeholder="Insert Phone Number"
-                    required
-                    keyboardType="numeric"
-                    value={loginForm.phoneNumber}
-                    onChange={(isiText) => {
-                        setLoginForm({
-                            ...loginForm,
-                            phoneNumber: isiText
                         })
                     }}
                 />

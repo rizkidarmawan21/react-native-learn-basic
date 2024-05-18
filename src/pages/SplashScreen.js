@@ -6,7 +6,7 @@ const SplashScreen = ({ navigation }) => {
 
     useEffect(() => {
         setTimeout(() => {
-            getData('auth').then(async res => {
+            getData('token').then(async res => {
                 if (res) {
                     navigation.replace('Main')
                 } else {
